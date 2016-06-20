@@ -1,10 +1,12 @@
 <?php
 
 namespace Firebase\JWT;
+
 use \DomainException;
 use \InvalidArgumentException;
 use \UnexpectedValueException;
 use \DateTime;
+use \Exception;
 
 /**
  * JSON Web Token implementation, based on this spec:
@@ -214,6 +216,7 @@ class JWT
      * @return bool
      *
      * @throws DomainException Invalid Algorithm or OpenSSL failure
+     * @throws \Exception
      */
     private static function verify($msg, $signature, $key, $alg)
     {
