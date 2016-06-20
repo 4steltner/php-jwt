@@ -193,7 +193,7 @@ class JWT
                 return hash_hmac($algorithm, $msg, $key, true);
             case 'openssl':
                 $signature = '';
-                $success = openssl_sign($msg, $signature, $key, $algorithm);
+                $success = @openssl_sign($msg, $signature, $key, $algorithm);
                 if (!$success) {
                     throw new DomainException("OpenSSL unable to sign data");
                 } else {
