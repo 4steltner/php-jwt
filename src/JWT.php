@@ -224,6 +224,11 @@ class JWT
         list($function, $algorithm) = self::$supported_algs[$alg];
         switch($function) {
             case 'openssl':
+                // @TODO there is a problem with ec keys, see here for openssl_sign():
+                // https://bugs.php.net/bug.php?id=66501
+                if (!version_compare(PHP_VERSION, '5.4.0', '>=')) {
+                    throw new Exception('Key type not supported in this PHP build!');
+                }
                 $success = openssl_verify($msg, $signature, $key, $algorithm);
                 if (!$success) {
                     throw new DomainException("OpenSSL unable to verify data: " . openssl_error_string());
